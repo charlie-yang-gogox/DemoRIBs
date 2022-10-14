@@ -44,7 +44,7 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
                         LoginState.Success -> {
                             presenter.processLogin(false, "success, jump to another screen")
                             router.detachLogin()
-                            router.attachLogout()
+                            router.attachLogout(info.first)
                         }
                         LoginState.AccNotExisted -> presenter.processLogin(false, "account isn't existed")
                         LoginState.WrongPassword -> presenter.processLogin(false, "please try another password")

@@ -12,10 +12,10 @@ class LoginRouter(
     view: LoginView,
     interactor: LoginInteractor,
     component: LoginBuilder.Component,
-    val loginBuilder: LogoutBuilder
+    val logoutBuilder: LogoutBuilder
 ) : ViewRouter<LoginView, LoginInteractor>(view, interactor, component) {
-    fun attachLogout() {
-        val logoutRouter = loginBuilder.build(view)
+    fun attachLogout(accountText: String) {
+        val logoutRouter = logoutBuilder.build(view, accountText)
         attachChild(logoutRouter)
         view.addView(logoutRouter.view)
     }

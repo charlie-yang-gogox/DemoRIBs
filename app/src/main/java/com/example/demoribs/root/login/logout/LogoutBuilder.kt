@@ -28,12 +28,13 @@ class LogoutBuilder(dependency: ParentComponent) : ViewBuilder<LogoutView, Logou
    * @param parentViewGroup parent view group that this router's view will be added to.
    * @return a new [LogoutRouter].
    */
-  fun build(parentViewGroup: ViewGroup): LogoutRouter {
+  fun build(parentViewGroup: ViewGroup, accountText: String): LogoutRouter {
     val view = createView(parentViewGroup)
     val interactor = LogoutInteractor()
     val component = DaggerLogoutBuilder_Component.builder()
       .parentComponent(dependency)
       .view(view)
+      .account(accountText)
       .interactor(interactor)
       .build()
     return component.logoutRouter()
@@ -87,6 +88,9 @@ class LogoutBuilder(dependency: ParentComponent) : ViewBuilder<LogoutView, Logou
 
       @BindsInstance
       fun view(view: LogoutView): Builder
+
+      @BindsInstance
+      fun account(@Named("account") account: String): Builder
 
       fun parentComponent(component: ParentComponent): Builder
 

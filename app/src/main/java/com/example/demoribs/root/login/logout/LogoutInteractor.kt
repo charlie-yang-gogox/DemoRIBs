@@ -20,6 +20,9 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
     @Inject
     lateinit var presenter: LogoutPresenter
 
+    @field:[Inject Named("account")]
+    lateinit var account: String
+
     @Inject
     lateinit var listener: Listener
 
@@ -27,6 +30,7 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
 
     override fun didBecomeActive(savedInstanceState: Bundle?) {
         super.didBecomeActive(savedInstanceState)
+        presenter.setUserAccount(account)
         presenter.onLogoutClicked().subscribe {
             router.detachLogout()
             listener.attachLogin()
@@ -43,6 +47,7 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
      */
     interface LogoutPresenter {
         fun onLogoutClicked(): Observable<Unit>
+        fun setUserAccount(accountText: String)
     }
 
     interface Listener {
