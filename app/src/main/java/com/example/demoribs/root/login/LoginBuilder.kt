@@ -70,6 +70,14 @@ class LoginBuilder(dependency: ParentComponent) :
             ): LoginRouter {
                 return LoginRouter(view, interactor, component, LogoutBuilder(component))
             }
+
+            @LoginScope
+            @Provides
+            @JvmStatic
+            @Named("pw")
+            fun providesPw(loginInteractor: LoginInteractor): String {
+                return loginInteractor.getPw()
+            }
         }
 
         // TODO: Create provider methods for dependencies created by this Rib. These should be static.

@@ -54,6 +54,10 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
         }.addTo(disposables)
     }
 
+    fun getPw(): String {
+        return presenter.getPwFromEditText()
+    }
+
     override fun willResignActive() {
         super.willResignActive()
         disposables.clear()
@@ -65,5 +69,6 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
     interface LoginPresenter {
         fun loginClicked(): Observable<Pair<String, String>>
         fun processLogin(isVerifying : Boolean, msg: String = "")
+        fun getPwFromEditText(): String
     }
 }

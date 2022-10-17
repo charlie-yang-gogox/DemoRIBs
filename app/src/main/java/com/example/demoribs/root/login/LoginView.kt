@@ -48,4 +48,7 @@ class LoginView @JvmOverloads constructor(
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun getPwFromEditText(): String = pw_tv.text.toString()
+
 }
