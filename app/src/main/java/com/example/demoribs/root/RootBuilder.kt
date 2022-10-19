@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.demoribs.R
 import com.example.demoribs.root.login.LoginBuilder
+import com.example.demoribs.root.login.logout.LogoutInteractor
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -67,6 +68,11 @@ class RootBuilder(dependency: ParentComponent) :
             ): RootRouter {
                 return RootRouter(view, interactor, component, LoginBuilder(component))
             }
+
+            @RootScope
+            @Provides
+            @JvmStatic
+            fun logoutListener(interactor: RootInteractor) : LogoutInteractor.Listener = interactor.LogoutListener()
         }
 
         // TODO: Create provider methods for dependencies created by this Rib. These should be static.

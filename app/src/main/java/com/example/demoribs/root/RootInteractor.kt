@@ -1,5 +1,6 @@
 package com.example.demoribs.root
 
+import com.example.demoribs.root.login.logout.LogoutInteractor
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -31,4 +32,10 @@ class RootInteractor : Interactor<RootInteractor.RootPresenter, RootRouter>() {
    * Presenter interface implemented by this RIB's view.
    */
   interface RootPresenter
+
+  inner class LogoutListener: LogoutInteractor.Listener {
+    override fun attachLogin() {
+      router.attachLogin()
+    }
+  }
 }

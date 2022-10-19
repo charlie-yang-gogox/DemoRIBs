@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.demoribs.R
 import com.example.demoribs.root.login.logout.LogoutBuilder
+import com.example.demoribs.root.login.logout.LogoutInteractor
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -46,6 +47,7 @@ class LoginBuilder(dependency: ParentComponent) :
 
     interface ParentComponent {
         // TODO: Define dependencies required from your parent interactor here.
+        fun listener() : LogoutInteractor.Listener
     }
 
     @dagger.Module

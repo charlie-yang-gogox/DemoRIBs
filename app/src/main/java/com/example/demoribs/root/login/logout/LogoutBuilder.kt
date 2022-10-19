@@ -47,6 +47,8 @@ class LogoutBuilder(dependency: ParentComponent) : ViewBuilder<LogoutView, Logou
 
   interface ParentComponent {
     // define args from parent with parent provide
+    fun listener() : LogoutInteractor.Listener
+
   }
 
   @dagger.Module

@@ -20,12 +20,16 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
     @Inject
     lateinit var presenter: LogoutPresenter
 
+    @Inject
+    lateinit var listener: Listener
+
     private val disposables = CompositeDisposable()
 
     override fun didBecomeActive(savedInstanceState: Bundle?) {
         super.didBecomeActive(savedInstanceState)
         presenter.onLogoutClicked().subscribe {
-            // TODO
+            router.detachLogout()
+            listener.attachLogin()
         }.addTo(disposables)
     }
 
@@ -39,5 +43,9 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
      */
     interface LogoutPresenter {
         fun onLogoutClicked(): Observable<Unit>
+    }
+
+    interface Listener {
+        fun attachLogin()
     }
 }

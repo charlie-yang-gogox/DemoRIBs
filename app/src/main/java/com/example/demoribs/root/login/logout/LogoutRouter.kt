@@ -11,5 +11,10 @@ import com.uber.rib.core.ViewRouter
 class LogoutRouter(
     view: LogoutView,
     interactor: LogoutInteractor,
-    val component: LogoutBuilder.Component
-) : ViewRouter<LogoutView, LogoutInteractor>(view, interactor, component)
+    val component: LogoutBuilder.Component,
+) : ViewRouter<LogoutView, LogoutInteractor>(view, interactor, component) {
+    fun detachLogout() {
+        view.removeAllViews()
+        detachChild(this)
+    }
+}
