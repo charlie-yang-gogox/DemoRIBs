@@ -48,6 +48,8 @@ class LoginBuilder(dependency: ParentComponent) :
     interface ParentComponent {
         // TODO: Define dependencies required from your parent interactor here.
         fun listener() : LogoutInteractor.Listener
+
+        fun loginStream() : MutableLoginStream
     }
 
     @dagger.Module
@@ -79,8 +81,6 @@ class LoginBuilder(dependency: ParentComponent) :
                 return loginInteractor.getPw()
             }
         }
-
-        // TODO: Create provider methods for dependencies created by this Rib. These should be static.
     }
 
     @LoginScope

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.demoribs.R
 import com.example.demoribs.root.login.LoginBuilder
+import com.example.demoribs.root.login.LoginStream
+import com.example.demoribs.root.login.MutableLoginStream
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -52,6 +54,9 @@ class LogoutBuilder(dependency: ParentComponent) : ViewBuilder<LogoutView, Logou
 
     @Named("pw")
     fun pw(): String
+
+    fun loginStream(): MutableLoginStream
+
   }
 
   @dagger.Module

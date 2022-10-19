@@ -1,6 +1,7 @@
 package com.example.demoribs.root.login
 
 import android.util.Log
+import com.example.demoribs.root.RootBuilder
 import com.example.demoribs.root.api.DummyApiService
 import com.example.demoribs.root.api.LoginState
 import com.uber.rib.core.Bundle
@@ -13,6 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Coordinates Business Logic for [LoginScope].
@@ -24,6 +26,9 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
 
     @Inject
     lateinit var presenter: LoginPresenter
+
+    @Inject
+    lateinit var loginStream: MutableLoginStream
 
     private val disposables = CompositeDisposable()
 
@@ -46,9 +51,20 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
                             router.detachLogin()
                             router.attachLogout(info.first)
                         }
-                        LoginState.AccNotExisted -> presenter.processLogin(false, "account isn't existed")
-                        LoginState.WrongPassword -> presenter.processLogin(false, "please try another password")
-                        LoginState.Verifying -> presenter.processLogin(true)
+                        LoginState.AccNotExisted -> {
+                            presenter.processLogin(false, "account isn't existed")
+                            loginStream.addTimes()
+                        }
+                        LoginState.WrongPassword -> {
+                            presenter.processLogin(
+                                false,
+                                "please try another password"
+                            )
+                            loginStream.addTimes()
+                        }
+                        LoginState.Verifying -> {
+                            presenter.processLogin(true)
+                        }
                     }
                 }.addTo(disposables)
         }.addTo(disposables)
@@ -68,7 +84,7 @@ class LoginInteractor : Interactor<LoginInteractor.LoginPresenter, LoginRouter>(
      */
     interface LoginPresenter {
         fun loginClicked(): Observable<Pair<String, String>>
-        fun processLogin(isVerifying : Boolean, msg: String = "")
+        fun processLogin(isVerifying: Boolean, msg: String = "")
         fun getPwFromEditText(): String
     }
 }

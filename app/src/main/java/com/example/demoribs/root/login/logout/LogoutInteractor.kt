@@ -1,5 +1,7 @@
 package com.example.demoribs.root.login.logout
 
+import com.example.demoribs.root.login.LoginStream
+import com.example.demoribs.root.login.MutableLoginStream
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -29,11 +31,16 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
     @field:[Inject Named("pw")]
     lateinit var password: String
 
+    @Inject
+    lateinit var loginStream: MutableLoginStream
+
     private val disposables = CompositeDisposable()
 
     override fun didBecomeActive(savedInstanceState: Bundle?) {
         super.didBecomeActive(savedInstanceState)
-        presenter.showInfoOnTextView(account, password)
+        loginStream.showLoginInfo().subscribe {
+            presenter.showInfoOnTextView(account, password, it)
+        }.addTo(disposables)
         presenter.onLogoutClicked().subscribe {
             router.detachLogout()
             listener.attachLogin()
@@ -50,7 +57,7 @@ class LogoutInteractor : Interactor<LogoutInteractor.LogoutPresenter, LogoutRout
      */
     interface LogoutPresenter {
         fun onLogoutClicked(): Observable<Unit>
-        fun showInfoOnTextView(accountText: String, pwText: String)
+        fun showInfoOnTextView(accountText: String, pwText: String, times: Int)
     }
 
     interface Listener {

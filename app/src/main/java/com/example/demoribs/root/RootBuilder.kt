@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.demoribs.R
 import com.example.demoribs.root.login.LoginBuilder
+import com.example.demoribs.root.login.LoginStream
+import com.example.demoribs.root.login.MutableLoginStream
 import com.example.demoribs.root.login.logout.LogoutInteractor
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
@@ -12,6 +14,7 @@ import dagger.BindsInstance
 import dagger.Provides
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy.CLASS
+import javax.inject.Named
 import javax.inject.Qualifier
 import javax.inject.Scope
 
@@ -73,9 +76,18 @@ class RootBuilder(dependency: ParentComponent) :
             @Provides
             @JvmStatic
             fun logoutListener(interactor: RootInteractor) : LogoutInteractor.Listener = interactor.LogoutListener()
+
+            @RootScope
+            @RootInternal
+            @Provides
+            @JvmStatic
+            fun mutableLoginStream(): MutableLoginStream {
+                return MutableLoginStream(0)
+            }
         }
 
-        // TODO: Create provider methods for dependencies created by this Rib. These should be static.
+        @Binds
+        abstract fun loginStream(@RootInternal mutableScoreStream: MutableLoginStream): MutableLoginStream
     }
 
     @RootScope

@@ -24,7 +24,7 @@ class LogoutView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     override fun onLogoutClicked(): Observable<Unit> = didClickBehaviorRelay
 
-    override fun showInfoOnTextView(accountText: String, pwText: String) {
-        logout_tv.text = "$accountText login success \nyour password is: $pwText"
+    override fun showInfoOnTextView(accountText: String, pwText: String, times: Int) {
+        logout_tv.text = "$accountText login success \nyour password is: $pwText\nWrong times: $times"
     }
 }
